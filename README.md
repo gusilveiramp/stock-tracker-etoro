@@ -46,6 +46,7 @@ function monitEtoroStock(minTargetValue, maxTargetValue) {
                     let value = Number(targetNode.textContent);
                     if(value < minTargetValue || value > maxTargetValue){
                         beep(200, 440, 0.5);
+                        console.log(new Date());
                     }
                 }
             });
