@@ -20,16 +20,16 @@ function monitEtoroStock(minTargetValue, maxTargetValue) {
     const targetNode = document.querySelector('[automation-id="market-page-head-stats-value"]');
 
     if (!targetNode) {
-        console.error('Elemento não encontrado!');
-        return;
+      console.error('Element not found!');
+      return;
     }
 
-    // Cria uma instância de MutationObserver se ainda não existir
+    // Creates a MutationObserver instance if it does not already exist
     if (!stockObserver) {
         stockObserver = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === 'childList' || mutation.type === 'characterData') {
-                    console.log('Mudança detectada:', Number(targetNode.textContent));
+                    console.log('Change detected:', Number(targetNode.textContent));
                     let value = Number(targetNode.textContent);
                     if(value < minTargetValue || value > maxTargetValue){
                         beep(200, 440, 0.5);
@@ -41,7 +41,7 @@ function monitEtoroStock(minTargetValue, maxTargetValue) {
 
     const config = { childList: true, characterData: true, subtree: true };
 
-    // Começa a observar o elemento alvo
+    // Starts observing the target element
     stockObserver.observe(targetNode, config);
 }
 
@@ -49,7 +49,7 @@ function stopMonitoringStock() {
     if (stockObserver) {
         stockObserver.disconnect();
         stockObserver = null;
-        console.log("Monitoramento parado.");
+        console.log("Monitoring stopped.");
     }
 }
 

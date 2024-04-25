@@ -1,15 +1,15 @@
-<h1>Stock Tracker eToro</h1>
-<p>Script simples para monitoramento de ativos na plataforma <b>etoro.com</b>.<p>
+<h1>eToro Stock Tracker</h1>
+<p>Simple script for monitoring assets on the <b>etoro.com</b> platform.</p>
 
-<p>Você receberá um <b>alerta sonoro</b> quando o ativo for inferior ao valor mínino ou superior ao valor máximo definidos.</p>
+<p>You will receive an <b>auditory alert</b> when the asset's value goes below the minimum or above the maximum set values.</p>
 
-<p>Basta deixar a aba do navegador aberta na tela do ativo após executar o script, que ele se encarregará de avisá-lo para que você tome uma ação de compra ou venda.</p>
+<p>Just leave the browser tsab open on the asset's page after executing the script, and it will notify you to take a buying or selling action.</p>
 
-<h3>Como utilizar?</h3>
+<h3>How to use?</h3>
 
-[1] - Acesse a página do ativo que quer monitorar: Exemplo: https://www.etoro.com/markets/se
+[1] - Access the asset's page you want to monitor: Example: https://www.etoro.com/markets/se
 
-[2] - Copie e cole o código abaixo no <b>Inspecionar -> Console</b> do seu Google Chrome:
+[2] - Copy and paste the code below into the <b>Inspect -> Console</b> of your Google Chrome:
 ```js
 var stockObserver;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -33,16 +33,16 @@ function monitEtoroStock(minTargetValue, maxTargetValue) {
     const targetNode = document.querySelector('[automation-id="market-page-head-stats-value"]');
 
     if (!targetNode) {
-        console.error('Elemento não encontrado!');
-        return;
+      console.error('Element not found!');
+      return;
     }
 
-    // Cria uma instância de MutationObserver se ainda não existir
+    // Creates a MutationObserver instance if it does not already exist
     if (!stockObserver) {
         stockObserver = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === 'childList' || mutation.type === 'characterData') {
-                    console.log('Mudança detectada:', Number(targetNode.textContent));
+                    console.log('Change detected:', Number(targetNode.textContent));
                     let value = Number(targetNode.textContent);
                     if(value < minTargetValue || value > maxTargetValue){
                         beep(200, 440, 0.5);
@@ -54,7 +54,7 @@ function monitEtoroStock(minTargetValue, maxTargetValue) {
 
     const config = { childList: true, characterData: true, subtree: true };
 
-    // Começa a observar o elemento alvo
+    // Starts observing the target element
     stockObserver.observe(targetNode, config);
 }
 
@@ -62,18 +62,21 @@ function stopMonitoringStock() {
     if (stockObserver) {
         stockObserver.disconnect();
         stockObserver = null;
-        console.log("Monitoramento parado.");
+        console.log("Monitoring stopped.");
     }
 }
 ```
 
-[3] - Inicie o monitoramento colando o código abaixo no <b>Inspecionar -> Console</b> do seu Google Chrome:
+[3] - Start monitoring by pasting the code below into the <b>Inspect -> Console</b> of your Google Chrome:
 ```js
 // Inicia o monitoramento com os valores mínimo e máximo
 monitEtoroStock(90.00, 99.50); 
+```
 
+[4] - Stop monitoring by pasting the code below into the <b>Inspect -> Console</b> of your Google Chrome:
+```js
 // Para o monitoramento 
 stopMonitoringStock();  
 ```
 
-Agora o Stock Tracker está monitorando o ativo na aba do seu navageador. Enquanto essa aba estiver aberta, ele continuará o monitoramento. Você pode abrir outras abas e trabalhar normalmente. Assim que o valor mínimo ou máximo forem atingidos, você receberá um <b>alerta sonoro</b> para que tome alguma ação quanto ao ativo.
+Now the Stock Tracker is monitoring the asset in your browser tab. As long as this tab remains open, it will continue monitoring. You can open other tabs and work normally. As soon as the minimum or maximum values are reached, you will receive an <b>auditory alert</b> to take some action regarding the asset.
