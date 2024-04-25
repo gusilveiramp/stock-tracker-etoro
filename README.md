@@ -1,4 +1,4 @@
-<h1>eToro Stock Tracker</h1>
+<h1>Stock Tracker - eToro</h1>
 <p>Simple script for monitoring assets on the <b>etoro.com</b> platform.</p>
 
 <p>You will receive an <b>auditory alert</b> when the asset's value goes below the minimum or above the maximum set values.</p>
